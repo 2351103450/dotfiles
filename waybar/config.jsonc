@@ -1,72 +1,49 @@
 // -*- mode: jsonc -*-
+// =============================================================================
+//
+// 配置文档: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
 {
-    "layer": "top", // Waybar at top layer
-    // Waybar position (top|bottom|left|right)
+    // -------------------------------------------------------------------------
+    // Global configuration
+    // -------------------------------------------------------------------------
+    // Waybar at top layer
+    "layer": "top",
     "position": "top",
-    "height": 8, // Waybar height (to be removed for auto height)
+    "height": 8,
     // "width": 1280, // Waybar width
     // "spacing": 2, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "sway/workspaces"
+        "hyprland/workspaces"
     ],
-    // Modules configuration
-    "sway/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": false,
-        "format": "{icon}",
-        "format-icons": {
-            "1:web": "",
-            "2:code": "",
-            "3:term": "",
-            "4:work": "",
-            "5:music": "",
-            "6:docs": "",
-            "urgent": "",
-            "focused": "",
-            "default": ""
-        }
-    },
     "modules-center": [],
     "modules-right": [
         "pulseaudio",
         "network",
         "cpu",
         "memory",
-        "battery",
         "tray",
         "clock"
     ],
-    "battery": {
-        "states": {
-            // "good": 95,
-            "warning": 30,
-            "critical": 15
+    // -------------------------------------------------------------------------
+    // 模块
+    // -------------------------------------------------------------------------
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "format-icons": {
+            "1:term": "",
+            "2:web": "",
+            "3:code": "",
+            "4:music": "",
+            "5": "",
+            "urgent": "",
+            "active": "", // 当前窗口图标
+            "default": "" // 默认图标
         },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            ""
-        ]
-    },
-    "battery#bat2": {
-        "bat": "BAT2"
-    },
-    "tray": {
-        // "icon-size": 21,
-        "spacing": 10
-    },
-    "clock": {
-        "format-alt": "{:%Y-%m-%d}"
+        "sort-by-number": true
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
@@ -91,6 +68,41 @@
         },
         "on-click": "pavucontrol"
     },
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "",
+        "format-ethernet": " {ifname}",
+        "tooltip-format": "{essid} {signalStrength}% {ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname} {gwaddr}",
+        "tooltip": true
+    },
+    "cpu": {
+        "interval": 5,
+        "format": "  {usage}%", // Icon: microchip
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+    "memory": {
+        "interval": 5,
+        "format": "  {}%", // Icon: memory
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+    "tray": {
+        // "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        "interval": 1,
+        "format": "  {:%Y-%m-%d %H:%M:%S}", // Icon: calendar-alt
+        "tooltip-format": "{:%e %B %Y}"
+    },
     "keyboard-state": {
         "numlock": true,
         "capslock": true,
@@ -99,58 +111,6 @@
             "locked": "",
             "unlocked": ""
         }
-    },
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
-    "sway/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": [
-            "",
-            ""
-        ],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
-    },
-    "cpu": {
-        "format": "{usage}% "
-    },
-    "memory": {
-        "format": "{}% "
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -189,16 +149,6 @@
             "balanced": "",
             "power-saver": ""
         }
-    },
-    "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "",
-        "format-ethernet": "{ifname} ",
-        "tooltip-format": "{essid} {signalStrength}% {ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname} {gwaddr}",
-        "tooltip": true
     },
     "custom/media": {
         "format": "{icon} {}",
