@@ -6,24 +6,23 @@
 // =============================================================================
 {
     // -------------------------------------------------------------------------
-    // 配置
+    // 配置，图标字体来自 otf-font-awesome，ttf-font-awesome
     // -------------------------------------------------------------------------
-    
-    // Waybar at top layer
     "layer": "top",
-
     "position": "top",
-
     "height": 8,
-
- //    "width": 1280, // Waybar width
-
+    //    "width": 1280, // Waybar width
+    // 模块间距 
     "spacing": 0, // Gaps between modules (4px)
-
     // Choose the order of the modules
-    "modules-left": [],
-    "modules-center": [
+    "modules-left": [
         "hyprland/workspaces"
+        // "hyprland/window"
+        // "hyprland/language",
+        // "hyprland/submap"
+    ],
+    "modules-center": [
+        "wlr/taskbar"
     ],
     "modules-right": [
         "pulseaudio",
@@ -37,15 +36,59 @@
     // -------------------------------------------------------------------------
     // 模块
     // -------------------------------------------------------------------------
-    "hyprland/workspaces": {
+    "hyprland/submap": {
+        "format": "✌️ {}",
+        "max-length": 8,
+        "tooltip": false
+    },
+    "hyprland/language": {
+        "format": "Lang: {}",
+        "format-en": "AMERICA, HELL YEAH!",
+        "format-tr": "As bayrakları",
+        "keyboard-name": "at-translated-set-2-keyboard"
+    },
+    "hyprland/window": {
+        "format": "{class}, {initialClass}, {initialTitle}, {title}",
+        "rewrite": {
+            "(.*) — Mozilla Firefox": "🌎 $1",
+            "(.*) - fish": "> [$1]",
+            "(.*) - chromium": "🌎 $1"
+        },
+        "separate-outputs": true
+    },
+    "wlr/taskbar": {
+        // https://github.com/Alexays/Waybar/wiki/Module:-Taskbar
         "format": "{icon}",
+        // "tooltip-format": "{app_id}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "on-click-right": "minimize",
+        "app_ids-mapping": {
+            "Chromium": "chromium",
+            "code-oss": "vscode",
+            "Kitty": "kitty",
+            "jetbrains-idea-ce": "idea-ce",
+            "obsidian": "obsidian"
+        }
+        // "sort-by-app-id": true,
+        // "rewrite": {
+        //     "Chromium": " asd as 浏览器",
+        //     "c": "asd",
+        //     "code-oss": "asd12",
+        //     "VSCode": "123123",
+        //     "Firefox Web Browser": "Firefox",
+        //     "Foot Server": "Terminal"
+        // }
+    },
+    "hyprland/workspaces": {
+        "format": "{name} {icon}",
         "on-click": "activate",
         "format-icons": {
-            "1": "", // 终端
-            "2": "", // 浏览器
-            "3": "", // 代码
-            "4": "", // 音乐
-            "5": "", // 聊天
+            // "1": "", // 终端
+            // "2": "", // 浏览器
+            // "3": "", // 代码
+            // "4": "", // 音乐
+            // "5": "", // 聊天
             "urgent": "",
             "active": "", // 当前窗口
             "default": "" // 默认窗口
@@ -53,13 +96,17 @@
         "sort-by-number": true
     },
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "scroll-step": 1, // %, can be a float
+        // "format": "{volume}% {icon} {format_source}",
+        // "format-bluetooth": "{volume}% {icon} {format_source}",
+        // "format-bluetooth-muted": " {icon} {format_source}",
+        // "format-muted": " {format_source}",
+        // "format-source": "{volume}% ", // 麦克风
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": "",
+        "format-source-muted": "", // 禁音
         "format-icons": {
             "headphone": "",
             "hands-free": "",
@@ -73,7 +120,9 @@
                 ""
             ]
         },
-        "on-click": "pavucontrol"
+        "on-click": "pavucontrol", // 鼠标左键命令
+        "on-click-middle": "", // 鼠标中键命令
+        "on-click-right": "" // 鼠标右键命令
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
@@ -87,7 +136,7 @@
     },
     "cpu": {
         "interval": 5,
-        "format": "  {usage}%", // Icon: microchip
+        "format": " {usage}%", // Icon: microchip
         "states": {
             "warning": 70,
             "critical": 90
@@ -102,8 +151,7 @@
         }
     },
     "tray": {
-        // "icon-size": 21,
-        "spacing": 10
+        "spacing": 4
     },
     "clock": {
         "interval": 1,
