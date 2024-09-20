@@ -16,13 +16,13 @@
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "hyprland/workspaces"
+        "wlr/taskbar"
         // "hyprland/window"
         // "hyprland/language",
         // "hyprland/submap"
     ],
     "modules-center": [
-        "wlr/taskbar"
+        "hyprland/workspaces"
     ],
     "modules-right": [
         "pulseaudio",
@@ -59,7 +59,7 @@
     "wlr/taskbar": {
         // https://github.com/Alexays/Waybar/wiki/Module:-Taskbar
         "format": "{icon}",
-        // "tooltip-format": "{app_id}",
+        "tooltip-format": "{app_id}",
         "on-click": "activate",
         "on-click-middle": "close",
         "on-click-right": "minimize",
