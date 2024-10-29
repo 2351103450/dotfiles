@@ -9,7 +9,7 @@ window#waybar {
 }
 
 .modules-left {
-    border-radius: 4px;
+    border-radius: 2px;
     background-color: rgba(18, 18, 18, 1.0);
     padding: 0 8px;
 }

@@ -1,12 +1,13 @@
 {
+    "reload_style_on_change": true,
     "layer": "top",
     "position": "top",
     "spacing": 0,
-    "margin-top": 0,
-    "margin-left": 4,
-    "margin-right": 4,
-    "margin-bottom": 0,
-    "height": 8,
+    "margin-top": 2,
+    "margin-left": 2,
+    "margin-right": 2,
+    "margin-bottom": 2,
+    "height": 16,
     "modules-left": [
         "hyprland/window"
     ],
@@ -22,24 +23,36 @@
         "battery",
         "clock"
     ],
+    // https://github.com/Alexays/Waybar/wiki/Module:-Hyprland
     "hyprland/workspaces": {
         "format": "{icon}",
-        "persistent-workspaces": {
-            "*": 10
-        },
+        // "format": "{icon} {windows}",
+        // "format-window-separator": "\n",
         "on-click": "activate",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1",
-        "format-icons": {
-            "1": "\uf303",
-            "2": "\uf121",
-            "3": "\uf484",
-            "4": "\uf013",
-            "5": "\uf11b"
-        }
+        "on-scroll-up": "hyprctl dispatch workspace e-1",
+        "on-scroll-down": "hyprctl dispatch workspace e+1"
+        // "all-outputs": true,
+        // "window-rewrite-default": "", // circle-question
+        // "window-rewrite": {
+        //     "title<.*youtube.*>": "",
+        //     "title<.*bilibili.*>": "",
+        //     // ie 
+        //     "kitty": "", // terminal
+        //     "class<firefox>": "",
+        //     "class<chromium>": "",
+        //     "class<microsoft-edge>": "",
+        //     "class<qq>": "",
+        //     "class<wechat>": "",
+        //     "class<code>": "",
+        //     "class<steam>": "",
+        //     "class<obsidian>": "" // book
+        //     // "class<firefox> title<.*github.*>": "", // Windows whose class is "firefox" and title contains "github". Note that "class" always comes first.
+        //     // "foot": "", // Windows that contain "foot" in either class or title. For optimization reasons, it will only match against a title if at least one other window explicitly matches against a title.
+        // }
     },
     "hyprland/window": {
-        "format": "\uf105 {initialTitle}",
+        "format": "{class} {initialClass}",
+        //  {initialTitle}
         "separate-outputs": true
     },
     "tray": {
@@ -75,41 +88,65 @@
     },
     "cpu": {
         "interval": 1,
-        "format": "\uf4bc {usage:1}%",
-        "tooltip": true
+        "format": " {usage:2}%" // microchip
     },
+    // https://github.com/Alexays/Waybar/wiki/Module:-Memory
     "memory": {
         "interval": 1,
-        "format": "\uefc5 {used:0.1f}G",
-        "tooltip": true,
-        "tooltip-format": " RAM: {used:0.2f}G / {total:0.2f}G\nSwap: {swapUsed:0.2f}G / {swapTotal:0.2f}G"
+        "format": " {used:0.1f}G" // memory
     },
-    "network": {
-        "interval": 1,
-        "format-wifi": "\uf1eb {essid} ({signalStrength}%)",
-        "format-ethernet": "\uef09 {ifname}",
-        "format-linked": "\ueb32 No IP ({ifname})",
-        "format-disconnected": "\uf071 Disconnected",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}, Gateway: {gwaddr}",
-        "format-alt": "\uef09 {ipaddr}/{cidr}"
-    },
+    // "network": {
+    //     "interval": 1,
+    //     "format-wifi": "\uf1eb {essid} ({signalStrength}%)",
+    //     "format-ethernet": "\uef09 {ifname}",
+    //     "format-linked": "\ueb32 No IP ({ifname})",
+    //     "format-disconnected": "\uf071 Disconnected",
+    //     "tooltip-format": "{ifname}: {ipaddr}/{cidr}, Gateway: {gwaddr}",
+    //     "format-alt": "\uef09 {ipaddr}/{cidr}"
+    // },
+    // "pulseaudio": {
+    //     "scroll-step": 5,
+    //     // "format": "{icon} {volume:2}%",
+    //     "format": "VOL {volume:2}%",
+    //     "format-muted": "\ueee8",
+    //     "format-bluetooth": "{icon}\uf294 {volume}%",
+    //     "format-bluetooth-muted": "\ueee8 {icon}\uf294",
+    //     "format-icons": {
+    //         "default": [
+    //             "\uf026",
+    //             "\uf027",
+    //             "\uf028"
+    //         ]
+    //     },
+    //     "on-click-right": "pavucontrol",
+    //     "ignored-sinks": [
+    //         "AudioRelay Virtual Sink",
+    //         "Recorder Sink"
+    //     ]
+    // },
     "pulseaudio": {
-        "scroll-step": 5,
-        "format": "{icon} {volume:2}%",
-        "format-muted": "\ueee8",
-        "format-bluetooth": "{icon}\uf294 {volume}%",
-        "format-bluetooth-muted": "\ueee8 {icon}\uf294",
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
         "format-icons": {
+            "alsa_output.pci-0000_00_1f.3.analog-stereo": "",
+            "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "phone-muted": "",
+            "portable": "",
+            "car": "",
             "default": [
-                "\uf026",
-                "\uf027",
-                "\uf028"
+                "",
+                ""
             ]
         },
-        "on-click-right": "pavucontrol",
+        "scroll-step": 1,
+        "on-click": "pavucontrol",
         "ignored-sinks": [
-            "AudioRelay Virtual Sink",
-            "Recorder Sink"
+            "Easy Effects Sink"
         ]
     },
     "battery": {
